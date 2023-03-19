@@ -5,6 +5,7 @@ export interface CharacterEntityVm {
   description: string;
   specie: string;
   location: string;
+  bestSentences:string;
 }
 
 export const createEmptyCharacter = (): CharacterEntityVm => ({
@@ -14,4 +15,5 @@ export const createEmptyCharacter = (): CharacterEntityVm => ({
   picture: '',
   specie: '',
   location: '',
+  bestSentences: '',
 });

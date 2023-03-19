@@ -29,9 +29,9 @@ export const CharacterComponent: React.FunctionComponent<Props> = (props) => {
           <img src={character.picture} width="150px"/>
           <TextFieldComponent name="id" label="Id" disabled={true} />
           <TextFieldComponent name="description" label="Description" disabled={true} />
-          <TextFieldComponent name="name" label="Name" />
-          <TextFieldComponent name="location" label="Location" />
-          <TextFieldComponent name="species" label="Species" />
+          <TextFieldComponent name="name" label="Name" disabled={true} />
+          <TextFieldComponent name="location" label="Location" disabled={true} />
+          <TextFieldComponent name="species" label="Species" disabled={true} />
           <TextFieldComponent name="bestSentences" label="Best Sentences" multiline={true} rows={4}/>
 
           <Button type="submit" variant="contained" color="primary">

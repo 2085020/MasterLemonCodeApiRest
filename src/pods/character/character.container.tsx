@@ -25,7 +25,7 @@ export const CharacterContainer: React.FunctionComponent = (props) => {
 
   const handleSave = async (character: CharacterEntityVm) => {
     const apiCharacter = mapCharacterFromVmToApi(character);
-    const success = await api.saveHotel(apiCharacter);
+    const success = await api.saveCharacter(apiCharacter);
     if (success) {
       navigate(-1);
     } else {
