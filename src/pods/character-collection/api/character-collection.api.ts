@@ -3,19 +3,44 @@ import { CharacterEntityApi } from './character-collection.api-model';
 
 //let hotelCollection = [...mockHotelCollection];
 
-export const getCharacterCollection = async (): Promise<CharacterEntityApi[]> => {
-  return fetch(`https://rickandmortyapi.com/api/character`)
-    .then((response) => response.json())
-    .then((json) => json.results);
+export const getCharacterCollection = async (): Promise<
+  CharacterEntityApi[]
+> => {
+  return getFromGraphQL(`{
+    characters {
+      info {
+        count
+        pages
+        next
+        prev
+      }
+      results {
+        id
+        name
+        image
+        gender
+        species
+        origin {
+          name
+        }
+        status
+        location {
+          name
+        }
+      }
+    }
+  }`);
 };
 
-
-export const searchAllByPage = (page) =>
-  fetch(`https://rickandmortyapi.com/api/character?page=${page}`)
-    .then((response) => response.json())
-    .then((json) => json.results);
-
-export const searchAllByName = (name) =>
-  fetch(`https://rickandmortyapi.com/api/character/?name=${name}`)
-    .then((response) => response.json())
-    .then((json) => json.results);
+const getFromGraphQL = async (query): Promise<CharacterEntityApi[]> => {
+  return fetch('https://rickandmortyapi.com/graphql', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      query: query,
+    }),
+  }).then((res) => res.json())
+  .then((res) => res.data.characters.results);
+};
