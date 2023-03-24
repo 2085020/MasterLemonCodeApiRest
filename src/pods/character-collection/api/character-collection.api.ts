@@ -1,13 +1,13 @@
-import { CharacterEntityApi } from './character-collection.api-model';
+import { CharacterSearchApi } from './character-collection.api-model';
 //import { mockHotelCollection } from './hotel-collection.mock-data';
 
 //let hotelCollection = [...mockHotelCollection];
 
-export const getCharacterCollection = async (): Promise<
-  CharacterEntityApi[]
+export const getCharacterCollection = async (page): Promise<
+CharacterSearchApi
 > => {
   return getFromGraphQL(`{
-    characters {
+    characters (page: ${page}) {
       info {
         count
         pages
@@ -32,7 +32,7 @@ export const getCharacterCollection = async (): Promise<
   }`);
 };
 
-const getFromGraphQL = async (query): Promise<CharacterEntityApi[]> => {
+const getFromGraphQL = async (query): Promise<CharacterSearchApi> => {
   return fetch('https://rickandmortyapi.com/graphql', {
     method: 'POST',
     headers: {
@@ -42,5 +42,5 @@ const getFromGraphQL = async (query): Promise<CharacterEntityApi[]> => {
       query: query,
     }),
   }).then((res) => res.json())
-  .then((res) => res.data.characters.results);
+  .then((res) => res.data.characters);
 };

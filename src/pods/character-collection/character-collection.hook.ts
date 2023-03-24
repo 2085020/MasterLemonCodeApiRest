@@ -8,12 +8,20 @@ export const useCharacterCollection = () => {
   const [characterCollection, setCharacterCollection] = React.useState<CharacterEntityVm[]>(
     []
   );
+  const [ page, setPage ] = React.useState<number>(1);
+  const [ totalPages, setTotalPages ] = React.useState<number>(1);
+
 
   const loadCharacterCollection = () => {
-    getCharacterCollection().then((result) =>
-      setCharacterCollection(mapToCollection(result, mapFromApiToVm))
-    );
+    getCharacterCollection(page).then((result) => {
+      setCharacterCollection(mapToCollection(result.results, mapFromApiToVm));
+      setTotalPages(result.info.pages);
+    });
   };
 
-  return { characterCollection, loadCharacterCollection };
+  const loadPage = (actPage) => {
+    setPage(actPage);
+  }
+
+  return { characterCollection, loadCharacterCollection, page, loadPage, totalPages };
 };

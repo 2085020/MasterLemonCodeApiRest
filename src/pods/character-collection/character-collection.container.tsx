@@ -5,15 +5,16 @@ import { useCharacterCollection } from './character-collection.hook';
 import { HotelCollectionComponent } from './character-collection.component';
 
 export const CharacterCollectionContainer = () => {
-  const { characterCollection, loadCharacterCollection } = useCharacterCollection();
+  const { characterCollection, loadCharacterCollection, page, loadPage, totalPages } = useCharacterCollection();
+
   const navigate = useNavigate();
 
   React.useEffect(() => {
     loadCharacterCollection();
-  }, []);
+  }, [page]);
 
   const handleCreateHotel = () => {
-    navigate(linkRoutes.createHotel);
+    return true;
   };
 
   const handleEdit = (id: string) => {
@@ -21,8 +22,12 @@ export const CharacterCollectionContainer = () => {
   };
 
   const handleDelete = async (id: string) => {
-    loadCharacterCollection();
+
   };
+
+  const handleChangePage = (newPage:number) => {
+    loadPage(newPage);
+  }
 
   return (
     <HotelCollectionComponent
@@ -30,6 +35,9 @@ export const CharacterCollectionContainer = () => {
       onCreateHotel={handleCreateHotel}
       onEdit={handleEdit}
       onDelete={handleDelete}
+      onChangePage={handleChangePage}
+      totalPages={totalPages}
+      actualPage={page}
     />
   );
 };
